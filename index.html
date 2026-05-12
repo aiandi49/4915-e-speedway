@@ -759,7 +759,7 @@
             <div class="metric-row"><span class="mk">ROI Potential</span><span class="mv gold">★★★★★</span></div>
           </div>
         </div>
-        <div class="hbu-render">
+        <div class="hbu-render" onclick="openLightbox(0,'hbu')">
           <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/hbu/qsr-drive-thru.png" alt="QSR Drive-Thru + Retail Strip Rendering">
           <div class="img-label-badge accent">AI RENDERING · QSR</div>
           <div class="zoom-hint">⤢ FULLSCREEN</div>
@@ -779,7 +779,7 @@
             <div class="metric-row"><span class="mk">ROI Potential</span><span class="mv gold">★★★★☆</span></div>
           </div>
         </div>
-        <div class="hbu-render">
+        <div class="hbu-render" onclick="openLightbox(1,'hbu')">
           <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/hbu/medical-office.png" alt="Medical Office / Urgent Care Rendering">
           <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AI RENDERING · MEDICAL</div>
           <div class="zoom-hint">⤢ FULLSCREEN</div>
@@ -799,7 +799,7 @@
             <div class="metric-row"><span class="mk">ROI Potential</span><span class="mv gold">★★★★☆</span></div>
           </div>
         </div>
-        <div class="hbu-render">
+        <div class="hbu-render" onclick="openLightbox(2,'hbu')">
           <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/hbu/mixed-use.png" alt="Mixed-Use Infill Residential Rendering">
           <div class="img-label-badge" style="border-color:rgba(167,139,250,0.5);color:var(--purple);">AI RENDERING · MIXED-USE</div>
           <div class="zoom-hint">⤢ FULLSCREEN</div>
@@ -854,6 +854,18 @@
   <div class="lightbox-counter" id="lightbox-counter-aerial"></div>
 </div>
 
+<!-- HBU Lightbox -->
+<div class="lightbox" id="lightbox-hbu" onclick="closeLightboxOutside(event,'hbu')">
+  <button class="lightbox-close" onclick="closeLightbox('hbu')">✕</button>
+  <button class="lightbox-prev" onclick="lightboxNav(-1,'hbu')">‹</button>
+  <div class="lightbox-inner">
+    <img id="lightbox-img-hbu" src="" alt="">
+  </div>
+  <button class="lightbox-next" onclick="lightboxNav(1,'hbu')">›</button>
+  <div class="lightbox-caption" id="lightbox-caption-hbu"></div>
+  <div class="lightbox-counter" id="lightbox-counter-hbu"></div>
+</div>
+
 <script>
 // ═══════════════════════════════════════════
 //  IMAGE SETS
@@ -904,10 +916,18 @@ const SETS = {
       { src: BASE + '/aerial-angle/13.png', caption: 'AERIAL · 13' },
       { src: BASE + '/aerial-angle/14.png', caption: 'AERIAL · 14' },
     ]
+  },
+  hbu: {
+    label: 'AI RENDERING CONCEPTS',
+    imgs: [
+      { src: BASE + '/hbu/qsr-drive-thru.png',  caption: 'HBU · 01 · QSR DRIVE-THRU + RETAIL STRIP' },
+      { src: BASE + '/hbu/medical-office.png',   caption: 'HBU · 02 · MEDICAL OFFICE / URGENT CARE' },
+      { src: BASE + '/hbu/mixed-use.png',        caption: 'HBU · 03 · MIXED-USE INFILL RESIDENTIAL' },
+    ]
   }
 };
 
-const lbState = { original: 0, redline: 0, aerial: 0 };
+const lbState = { original: 0, redline: 0, aerial: 0, hbu: 0 };
 
 function openLightbox(i, set) {
   const imgs = SETS[set].imgs;
@@ -935,7 +955,7 @@ function lightboxNav(dir, set) {
 }
 
 document.addEventListener('keydown', e => {
-  ['original','redline','aerial'].forEach(set => {
+  ['original','redline','aerial','hbu'].forEach(set => {
     const lb = document.getElementById('lightbox-' + set);
     if (lb && lb.classList.contains('active')) {
       if (e.key === 'Escape') closeLightbox(set);
