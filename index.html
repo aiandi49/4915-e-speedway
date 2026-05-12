@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4915 E Speedway Blvd — PICOR | Cushman & Wakefield</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0a0b0d;
+    --surface:   #111316;
+    --card:      #16191e;
+    --border:    #252830;
+    --accent:    #c8a45a;
+    --accent2:   #e8c87a;
+    --text:      #e8eaf0;
+    --muted:     #6b7280;
+    --dim:       #9ca3af;
+    --red:       #e05c3a;
+    --green:     #4ade80;
+    --blue:      #5b9bd5;
+    --purple:    #a78bfa;
+    --radius:    12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ── LOADING BAR ── */
+  .media-loading-bar { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--border); z-index: 1000; }
+  .media-loading-bar .mlb-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.4s ease; }
+
+  /* ── HEADER ── */
+  header {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 40px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,11,13,0.97);
+    backdrop-filter: blur(12px);
+  }
+
+  .logo-block { display: flex; align-items: center; gap: 14px; }
+  .logo-pill { background: var(--accent); color: #0a0b0d; font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px; padding: 5px 12px; border-radius: 4px; }
+  .logo-name { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+  .header-badge { display: flex; align-items: center; gap: 8px; background: rgba(200,164,90,0.12); border: 1px solid rgba(200,164,90,0.3); border-radius: 20px; padding: 6px 16px; font-size: 12px; color: var(--accent); font-family: 'DM Mono', monospace; letter-spacing: 1px; }
+  .pulse-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+
+  /* ── HERO ── */
+  .hero-band {
+    position: relative; z-index: 5;
+    padding: 56px 40px 48px;
+    border-bottom: 1px solid var(--border);
+    max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: end; gap: 40px;
+  }
+  .hero-band::after { content: ''; position: absolute; bottom: 0; left: 40px; right: 40px; height: 1px; background: linear-gradient(90deg, var(--accent) 0%, transparent 60%); }
+
+  .address-super { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .address-main { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px,5vw,68px); line-height: 0.95; letter-spacing: 1px; color: var(--text); }
+  .address-main span { color: var(--accent); }
+  .address-sub { margin-top: 12px; font-size: 14px; color: var(--dim); letter-spacing: 1px; }
+
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 3px; border: 1px solid; }
+  .tag-sale { border-color: var(--accent); color: var(--accent); }
+  .tag-lease { border-color: var(--blue); color: var(--blue); }
+  .tag-zone { border-color: var(--red); color: var(--red); }
+
+  .hero-stats { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .stat-chip { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .stat-chip .val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--accent2); line-height: 1; }
+  .stat-chip .lbl { font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .divider-h { width: 1px; height: 30px; background: var(--border); align-self: center; }
+
+  /* ── STATS BANNER ── */
+  .stats-banner {
+    position: relative; z-index: 5;
+    background: linear-gradient(90deg, rgba(200,164,90,0.06) 0%, transparent 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4,1fr);
+  }
+  .stats-item { padding: 18px 24px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 3px; }
+  .stats-item:first-child { padding-left: 0; }
+  .stats-item:last-child { border-right: none; }
+  .stats-item .si-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .stats-item .si-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--accent2); line-height: 1; }
+  .stats-item .si-sub { font-size: 11px; color: var(--dim); }
+
+  /* ── MAIN ── */
+  main { position: relative; z-index: 5; max-width: 1400px; margin: 0 auto; padding: 40px 40px 80px; display: flex; flex-direction: column; gap: 0; }
+
+  /* ── SECTION LABELS ── */
+  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── IMAGE CARDS ── */
+  .image-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+  .img-card { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--card); border: 1px solid var(--border); aspect-ratio: 16/9; cursor: pointer; transition: border-color 0.2s, transform 0.2s; }
+  .img-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .img-card.wide { grid-column: 1 / -1; aspect-ratio: 21/9; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; padding: 20px; }
+  .lightbox.active { display: flex; }
+  .lightbox-inner { position: relative; max-width: 95vw; max-height: 92vh; display: flex; align-items: center; justify-content: center; }
+  .lightbox-inner img { max-width: 95vw; max-height: 88vh; object-fit: contain; border-radius: 8px; box-shadow: 0 40px 120px rgba(0,0,0,0.8); }
+  .lightbox-close { position: fixed; top: 20px; right: 28px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 22px; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 10001; }
+  .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+  .lightbox-prev, .lightbox-next { position: fixed; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 20px; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 10001; }
+  .lightbox-prev { left: 16px; }
+  .lightbox-next { right: 16px; }
+  .lightbox-prev:hover, .lightbox-next:hover { background: rgba(200,164,90,0.5); }
+  .lightbox-caption { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(10,11,13,0.85); border: 1px solid var(--border); border-radius: 20px; padding: 6px 18px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--dim); letter-spacing: 1.5px; white-space: nowrap; }
+  .lightbox-counter { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 2px; }
+
+  /* Image badges */
+  .img-label-badge { position: absolute; top: 10px; left: 10px; background: rgba(10,11,13,0.82); border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; padding: 4px 10px; font-family: 'DM Mono', monospace; font-size: 9px; color: #e8eaf0; letter-spacing: 1.5px; backdrop-filter: blur(6px); z-index: 5; text-transform: uppercase; }
+  .img-label-badge.accent { border-color: rgba(200,164,90,0.4); color: var(--accent); }
+  .zoom-hint { position: absolute; bottom: 10px; right: 10px; background: rgba(10,11,13,0.75); border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; padding: 4px 10px; font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; backdrop-filter: blur(6px); z-index: 5; opacity: 0; transition: opacity 0.2s; }
+  .img-card:hover .zoom-hint { opacity: 1; }
+
+  /* Real images */
+  .img-card img.real-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ── 3-COL GRID (Red Line Advertising) ── */
+  .image-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+
+  /* ── INFO GRID ── */
+  .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+  .info-card { background: var(--card); padding: 28px 32px; border-radius: var(--radius); border: 1px solid var(--border); }
+  .info-card.span2 { grid-column: span 2; }
+  .info-card.span3 { grid-column: span 3; }
+  .info-card .ic-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 20px; }
+
+  /* Detail table */
+  .detail-table { display: flex; flex-direction: column; }
+  .detail-row { display: flex; align-items: baseline; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid rgba(37,40,48,0.8); gap: 12px; }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-row .dr-k { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; flex-shrink: 0; }
+  .detail-row .dr-v { font-size: 12px; color: var(--text); font-weight: 500; text-align: right; }
+
+  /* Traffic */
+  .traffic-big { text-align: center; padding: 16px 0; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .traffic-big .tb-num { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: var(--accent2); line-height: 1; letter-spacing: -1px; }
+  .traffic-big .tb-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .traffic-sub { font-size: 12px; color: var(--dim); margin-top: 4px; }
+
+  /* Key features */
+  .feature-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+  .feature-item { display: flex; align-items: flex-start; gap: 12px; font-size: 12px; color: var(--dim); line-height: 1.55; padding: 8px 0; border-bottom: 1px solid rgba(37,40,48,0.5); }
+  .feature-item:nth-last-child(-n+2) { border-bottom: none; }
+  .feature-item .fi-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 7px; }
+
+  /* Surrounding tenants */
+  .tenant-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tenant-pill { font-size: 11px; color: var(--dim); background: var(--card); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; font-family: 'DM Mono', monospace; letter-spacing: 0.5px; }
+
+  /* Mkt stats */
+  .mkt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 8px; }
+  .mkt-item { display: flex; flex-direction: column; gap: 2px; }
+  .mkt-item .mi-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent2); line-height: 1; }
+  .mkt-item .mi-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.3; margin-top: 2px; }
+
+  /* Contact strip */
+  .contact-strip { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 40px; }
+  .agent-block { display: flex; align-items: center; gap: 16px; }
+  .agent-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: #0a0b0d; flex-shrink: 0; }
+  .agent-bio { display: flex; flex-direction: column; gap: 4px; }
+  .agent-name { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--text); line-height: 1; letter-spacing: 0.5px; }
+  .agent-title { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.5; }
+  .contact-links { display: flex; gap: 0; align-items: center; justify-content: center; }
+  .contact-link { display: flex; flex-direction: column; gap: 5px; padding: 0 36px; border-right: 1px solid var(--border); text-decoration: none; }
+  .contact-link:first-child { padding-left: 0; }
+  .contact-link:last-child { border-right: none; }
+  .contact-link .cl-label { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .contact-link .cl-val { font-size: 15px; color: var(--text); font-weight: 500; white-space: nowrap; transition: color 0.2s; }
+  .contact-link:hover .cl-val { color: var(--accent); }
+  .cta-btn { padding: 16px 36px; background: var(--accent); color: #0a0b0d; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.15s; white-space: nowrap; flex-shrink: 0; display: inline-block; font-weight: bold; }
+  .cta-btn:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  /* HBU Section */
+  .hbu-full-width { width: 100%; background: var(--bg); padding: 0 40px 60px; }
+  .hbu-full-inner { max-width: 1400px; margin: 0 auto; }
+  .hbu-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; }
+  .hbu-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.2s, transform 0.2s; position: relative; display: flex; flex-direction: column; }
+  .hbu-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .hbu-card.top-pick { border-color: rgba(200,164,90,0.4); }
+  .hbu-card.top-pick::before { content: '★ TOP PICK'; position: absolute; top: 10px; right: 10px; background: var(--accent); color: #0a0b0d; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 1.5px; padding: 3px 7px; border-radius: 3px; z-index: 5; }
+  .hbu-render { position: relative; aspect-ratio: 16/7; min-height: unset; background: var(--surface); cursor: pointer; }
+  .hbu-render img.real-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hbu-info { padding: 28px 32px; display: flex; flex-direction: column; justify-content: flex-start; gap: 0; border-bottom: 1px solid var(--border); }
+  .hbu-number { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+  .hbu-title { font-family: 'Bebas Neue', sans-serif; font-size: 42px; line-height: 0.95; letter-spacing: 0.5px; color: var(--text); margin-bottom: 14px; }
+  .hbu-desc { font-size: 12px; color: var(--dim); line-height: 1.6; margin-bottom: 20px; }
+  .hbu-metrics { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--border); padding-top: 4px; }
+  .metric-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid rgba(37,40,48,0.5); }
+  .metric-row:last-child { border-bottom: none; }
+  .metric-row .mk { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .metric-row .mv { font-family: 'Bebas Neue', sans-serif; font-size: 18px; line-height: 1; color: var(--text); }
+  .metric-row .mv.green { color: #4ade80; }
+  .metric-row .mv.gold { color: var(--accent); }
+
+  /* Section dividers */
+  .section-gap { height: 16px; }
+
+  /* ── FOOTER ── */
+  footer { position: relative; z-index: 5; border-top: 1px solid var(--border); padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; font-size: 10px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 0.8px; gap: 24px; flex-wrap: nowrap; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-band { animation: fadeUp 0.5s ease both; }
+  .image-grid, .image-grid-3, .image-grid-aerial { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    header { padding: 16px 20px; flex-wrap: wrap; gap: 10px; }
+    .hero-band { padding: 32px 20px; grid-template-columns: 1fr; gap: 20px; }
+    .hero-stats { flex-direction: row; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 16px; }
+    .address-main { font-size: clamp(28px,8vw,48px); }
+    .stats-banner { grid-template-columns: 1fr 1fr; }
+    .stats-item { padding: 14px 16px; }
+    main { padding: 24px 20px 40px; }
+    .image-grid { grid-template-columns: 1fr; }
+    .image-grid-3 { grid-template-columns: 1fr 1fr; }
+    .img-card.wide { grid-column: 1; aspect-ratio: 16/9; }
+    .info-grid { grid-template-columns: 1fr !important; }
+    .info-card.span2, .info-card.span3 { grid-column: span 1 !important; }
+    .feature-cols { grid-template-columns: 1fr; }
+    .contact-strip { grid-template-columns: 1fr; gap: 24px; }
+    .contact-links { flex-direction: column; gap: 16px; }
+    .contact-link { padding: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .cta-btn { width: 100%; text-align: center; }
+    .hbu-full-width { padding: 0 20px 40px; }
+    .hbu-title { font-size: 28px; }
+    footer { flex-direction: column; text-align: center; gap: 8px; padding: 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-banner { grid-template-columns: 1fr 1fr; }
+    .image-grid-3 { grid-template-columns: 1fr; }
+    .image-grid { grid-template-columns: 1fr; }
+    main { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading Bar -->
+<div class="media-loading-bar"><div class="mlb-fill" id="loadingBar"></div></div>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="logo-block">
+    <div class="logo-pill">PICOR</div>
+    <div class="logo-name">Cushman &amp; Wakefield Alliance</div>
+  </div>
+  <div class="header-badge">
+    <div class="pulse-dot"></div>
+    FOR SALE OR LEASE
+  </div>
+</header>
+
+<!-- ══ HERO ══ -->
+<div class="hero-band" style="max-width:1400px;margin:0 auto;">
+  <div>
+    <div class="address-super">
+      01 OF 03 &nbsp;·&nbsp; Tucson, Arizona
+      <span style="background:rgba(200,164,90,0.15);color:var(--accent);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;padding:3px 8px;border-radius:3px;border:1px solid rgba(200,164,90,0.3);">REDEVELOPMENT</span>
+    </div>
+    <div class="address-main">4915 E<br><span>Speedway</span> Blvd</div>
+    <div class="address-sub">Tucson, AZ 85712 &nbsp;·&nbsp; Pinecrest Shopping Center Corridor</div>
+    <div class="tag-row">
+      <span class="tag tag-sale">For Sale</span>
+      <span class="tag tag-lease">For Lease</span>
+      <span class="tag tag-zone">C-2 Zoning</span>
+      <span class="tag" style="border-color:var(--purple);color:var(--purple);">Redevelopment</span>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-chip"><div class="val">1.59 AC</div><div class="lbl">Total Land</div></div>
+    <div class="divider-h"></div>
+    <div class="stat-chip"><div class="val">69,124</div><div class="lbl">Square Feet</div></div>
+    <div class="divider-h"></div>
+    <div class="stat-chip"><div class="val">40,222</div><div class="lbl">VPD (2024)</div></div>
+  </div>
+</div>
+
+<!-- ══ STATS BANNER ══ -->
+<div class="stats-banner" style="max-width:1400px;margin:0 auto;">
+  <div class="stats-item">
+    <div class="si-lbl">Land Area</div>
+    <div class="si-val">1.59 AC</div>
+    <div class="si-sub">69,124 Square Feet</div>
+  </div>
+  <div class="stats-item">
+    <div class="si-lbl">Traffic (2024)</div>
+    <div class="si-val">40,222</div>
+    <div class="si-sub">Vehicles Per Day</div>
+  </div>
+  <div class="stats-item">
+    <div class="si-lbl">Zoning</div>
+    <div class="si-val" style="font-size:22px;">C-2</div>
+    <div class="si-sub">Commercial — Broad Use</div>
+  </div>
+  <div class="stats-item" style="background:rgba(200,164,90,0.06);">
+    <div class="si-lbl">Opportunity</div>
+    <div class="si-val" style="color:var(--accent);font-size:20px;">GROUND-UP</div>
+    <div class="si-sub">Sale or Lease</div>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<main>
+
+  <!-- ════════════════════════════════
+       SECTION 1 — ORIGINAL PHOTOS (5)
+       ════════════════════════════════ -->
+  <div class="section-label">Original Property Photography</div>
+  <div class="image-grid">
+
+    <!-- Original 1 — wide -->
+    <div class="img-card wide" onclick="openLightbox(0, 'original')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/original/1.png" alt="Original 1">
+      <div class="img-label-badge">ORIGINAL · 01</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <!-- Original 2 + 3 -->
+    <div class="img-card" onclick="openLightbox(1, 'original')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/original/2.png" alt="Original 2">
+      <div class="img-label-badge">ORIGINAL · 02</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(2, 'original')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/original/3.png" alt="Original 3">
+      <div class="img-label-badge">ORIGINAL · 03</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <!-- Original 4 + 5 -->
+    <div class="img-card" onclick="openLightbox(3, 'original')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/original/4.png" alt="Original 4">
+      <div class="img-label-badge">ORIGINAL · 04</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(4, 'original')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/original/5.png" alt="Original 5">
+      <div class="img-label-badge">ORIGINAL · 05</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+  </div><!-- /original image-grid -->
+
+  <!-- ════════════════════════════════
+       SECTION 2 — RED LINE ADVERTISING (9)
+       ════════════════════════════════ -->
+  <div class="section-gap"></div>
+  <div class="section-label" style="color:#e05c3a;">Red Line Advertising — Marketing Assets</div>
+  <div class="image-grid-3">
+
+    <div class="img-card" onclick="openLightbox(0, 'redline')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/red-line-advertising/1.png" alt="Red Line 1">
+      <div class="img-label-badge accent" style="border-color:rgba(224,92,58,0.5);color:#e05c3a;">RED LINE · 01</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <div class="img-card" onclick="openLightbox(1, 'redline')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/red-line-advertising/2.png" alt="Red Line 2">
+      <div class="img-label-badge accent" style="border-color:rgba(224,92,58,0.5);color:#e05c3a;">RED LINE · 02</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <div class="img-card" onclick="openLightbox(2, 'redline')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/red-line-advertising/3.png" alt="Red Line 3">
+      <div class="img-label-badge accent" style="border-color:rgba(224,92,58,0.5);color:#e05c3a;">RED LINE · 03</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <div class="img-card" onclick="openLightbox(3, 'redline')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/red-line-advertising/4.png" alt="Red Line 4">
+      <div class="img-label-badge accent" style="border-color:rgba(224,92,58,0.5);color:#e05c3a;">RED LINE · 04</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <div class="img-card" onclick="openLightbox(4, 'redline')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/red-line-advertising/5.png" alt="Red Line 5">
+      <div class="img-label-badge accent" style="border-color:rgba(224,92,58,0.5);color:#e05c3a;">RED LINE · 05</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <div class="img-card" onclick="openLightbox(5, 'redline')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/red-line-advertising/6.png" alt="Red Line 6">
+      <div class="img-label-badge accent" style="border-color:rgba(224,92,58,0.5);color:#e05c3a;">RED LINE · 06</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <div class="img-card" onclick="openLightbox(6, 'redline')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/red-line-advertising/7.png" alt="Red Line 7">
+      <div class="img-label-badge accent" style="border-color:rgba(224,92,58,0.5);color:#e05c3a;">RED LINE · 07</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <div class="img-card" onclick="openLightbox(7, 'redline')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/red-line-advertising/8.png" alt="Red Line 8">
+      <div class="img-label-badge accent" style="border-color:rgba(224,92,58,0.5);color:#e05c3a;">RED LINE · 08</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <div class="img-card" onclick="openLightbox(8, 'redline')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/red-line-advertising/9.png" alt="Red Line 9">
+      <div class="img-label-badge accent" style="border-color:rgba(224,92,58,0.5);color:#e05c3a;">RED LINE · 09</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+  </div><!-- /redline grid -->
+
+  <!-- ════════════════════════════════
+       SECTION 3 — AERIAL ANGLE (14)
+       ════════════════════════════════ -->
+  <div class="section-gap"></div>
+  <div class="section-label" style="color:var(--blue);">Aerial Angle — Drone Photography</div>
+  <div class="image-grid-3 image-grid-aerial">
+
+    <!-- Aerial 1 — wide -->
+    <div class="img-card wide" onclick="openLightbox(0, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/1.png" alt="Aerial 1">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 01 — OVERVIEW</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+    <div class="img-card" onclick="openLightbox(1, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/2.png" alt="Aerial 2">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 02</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(2, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/3.png" alt="Aerial 3">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 03</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(3, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/4.png" alt="Aerial 4">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 04</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(4, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/5.png" alt="Aerial 5">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 05</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(5, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/6.png" alt="Aerial 6">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 06</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(6, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/7.png" alt="Aerial 7">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 07</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(7, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/8.png" alt="Aerial 8">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 08</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(8, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/9.png" alt="Aerial 9">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 09</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(9, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/10.png" alt="Aerial 10">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 10</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(10, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/11.png" alt="Aerial 11">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 11</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(11, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/12.png" alt="Aerial 12">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 12</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(12, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/13.png" alt="Aerial 13">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 13</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+    <div class="img-card" onclick="openLightbox(13, 'aerial')">
+      <img class="real-img" src="https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway/aerial-angle/14.png" alt="Aerial 14">
+      <div class="img-label-badge" style="border-color:rgba(91,155,213,0.5);color:var(--blue);">AERIAL · 14</div>
+      <div class="zoom-hint">⤢ FULLSCREEN</div>
+    </div>
+
+  </div><!-- /aerial grid -->
+
+
+  <!-- ══ INFO GRID ══ -->
+  <div class="info-grid">
+
+    <!-- Traffic -->
+    <div class="info-card">
+      <div class="ic-title">Traffic Count</div>
+      <div class="traffic-big">
+        <div class="tb-num">40,222</div>
+        <div class="tb-lbl">Vehicles Per Day (2024)</div>
+      </div>
+      <div class="detail-table">
+        <div class="detail-row"><span class="dr-k">Corridor</span><span class="dr-v">Speedway Blvd</span></div>
+        <div class="detail-row"><span class="dr-k">Visibility</span><span class="dr-v">High — Signalized Access</span></div>
+        <div class="detail-row"><span class="dr-k">Frontage</span><span class="dr-v">Speedway Blvd Direct</span></div>
+      </div>
+    </div>
+
+    <!-- Property Details -->
+    <div class="info-card">
+      <div class="ic-title">Property Details</div>
+      <div class="detail-table">
+        <div class="detail-row"><span class="dr-k">Address</span><span class="dr-v">4915 E Speedway Blvd</span></div>
+        <div class="detail-row"><span class="dr-k">City / State</span><span class="dr-v">Tucson, AZ 85712</span></div>
+        <div class="detail-row"><span class="dr-k">Land Area</span><span class="dr-v">1.59 AC / 69,124 SF</span></div>
+        <div class="detail-row"><span class="dr-k">Zoning</span><span class="dr-v">C-2 (Commercial)</span></div>
+        <div class="detail-row"><span class="dr-k">Sale Price</span><span class="dr-v">Contact Agent</span></div>
+        <div class="detail-row"><span class="dr-k">Lease Rate</span><span class="dr-v">Contact Agent</span></div>
+        <div class="detail-row"><span class="dr-k">Opportunity</span><span class="dr-v">Redevelopment / Ground-Up</span></div>
+      </div>
+    </div>
+
+    <!-- Tucson Market -->
+    <div class="info-card">
+      <div class="ic-title">Tucson Market Overview</div>
+      <div class="mkt-grid">
+        <div class="mkt-item"><div class="mi-val">1.08M</div><div class="mi-lbl">MSA Population</div></div>
+        <div class="mkt-item"><div class="mi-val">0.6%</div><div class="mi-lbl">Pop. Growth (YOY)</div></div>
+        <div class="mkt-item"><div class="mi-val">456.6K</div><div class="mi-lbl">Total Households</div></div>
+        <div class="mkt-item"><div class="mi-val">$74K</div><div class="mi-lbl">Median HH Income</div></div>
+        <div class="mkt-item"><div class="mi-val">4.2%</div><div class="mi-lbl">Unemployment</div></div>
+        <div class="mkt-item"><div class="mi-val">35%</div><div class="mi-lbl">College Educated</div></div>
+      </div>
+    </div>
+
+    <!-- Key Features -->
+    <div class="info-card span2">
+      <div class="ic-title">Key Features</div>
+      <div class="feature-cols">
+        <div class="feature-item"><div class="fi-dot"></div>Redevelopment opportunity on cleared land</div>
+        <div class="feature-item"><div class="fi-dot"></div>Restaurant / coffee shop / QSR pad potential</div>
+        <div class="feature-item"><div class="fi-dot"></div>Separate retail / office strip possible</div>
+        <div class="feature-item"><div class="fi-dot"></div>High-density residential / in-fill eligible</div>
+        <div class="feature-item"><div class="fi-dot"></div>Medical or professional office building ready</div>
+        <div class="feature-item"><div class="fi-dot"></div>C-2 zoning — broad permitted uses</div>
+        <div class="feature-item"><div class="fi-dot"></div>Pinecrest Shopping Center adjacency</div>
+        <div class="feature-item"><div class="fi-dot"></div>40,222 VPD — high Speedway Blvd exposure</div>
+      </div>
+    </div>
+
+    <!-- Surrounding Tenants -->
+    <div class="info-card span2">
+      <div class="ic-title">Surrounding Tenants — Pinecrest Shopping Center Corridor</div>
+      <div class="tenant-row">
+        <span class="tenant-pill">Goodyear</span>
+        <span class="tenant-pill">O'Reilly Auto Parts</span>
+        <span class="tenant-pill">Goodwill</span>
+        <span class="tenant-pill">QuikTrip</span>
+        <span class="tenant-pill">Sprouts Farmers Market</span>
+        <span class="tenant-pill">Trader Joe's</span>
+        <span class="tenant-pill">Whole Foods</span>
+        <span class="tenant-pill">Walmart</span>
+        <span class="tenant-pill">Target</span>
+        <span class="tenant-pill">Dutch Bros</span>
+        <span class="tenant-pill">Planet Fitness</span>
+        <span class="tenant-pill">Petco</span>
+        <span class="tenant-pill">Hobby Lobby</span>
+        <span class="tenant-pill">Park Place Mall</span>
+        <span class="tenant-pill">Barnes &amp; Noble</span>
+        <span class="tenant-pill">Tucson Veterinary</span>
+        <span class="tenant-pill">Golf Exchange</span>
+        <span class="tenant-pill">Big 5</span>
+        <span class="tenant-pill">AutoZone</span>
+        <span class="tenant-pill">at home</span>
+        <span class="tenant-pill">Cinemark</span>
+        <span class="tenant-pill">Dillard's</span>
+        <span class="tenant-pill">Ulta</span>
+        <span class="tenant-pill">Five Guys</span>
+        <span class="tenant-pill">eegee's</span>
+        <span class="tenant-pill">The Human Bean</span>
+      </div>
+    </div>
+
+    <!-- Largest Employers -->
+    <div class="info-card">
+      <div class="ic-title">Largest Employers</div>
+      <div class="detail-table">
+        <div class="detail-row"><span class="dr-k" style="width:30px;flex-shrink:0;">01</span><span class="dr-v" style="text-align:left;flex:1;">University of Arizona</span><span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--accent2);white-space:nowrap;">16,076</span></div>
+        <div class="detail-row"><span class="dr-k" style="width:30px;flex-shrink:0;">02</span><span class="dr-v" style="text-align:left;flex:1;">Raytheon Missile Systems</span><span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--accent2);white-space:nowrap;">13,000</span></div>
+        <div class="detail-row"><span class="dr-k" style="width:30px;flex-shrink:0;">03</span><span class="dr-v" style="text-align:left;flex:1;">Davis-Monthan AFB</span><span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--accent2);white-space:nowrap;">11,000</span></div>
+        <div class="detail-row"><span class="dr-k" style="width:30px;flex-shrink:0;">04</span><span class="dr-v" style="text-align:left;flex:1;">State of Arizona</span><span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--accent2);white-space:nowrap;">8,580</span></div>
+      </div>
+      <div style="margin-top:18px;" class="ic-title">Recent Industry Arrivals</div>
+      <div class="detail-table">
+        <div class="detail-row"><span class="dr-k" style="width:30px;flex-shrink:0;">01</span><span class="dr-v" style="text-align:left;color:var(--dim);">Amazon</span></div>
+        <div class="detail-row"><span class="dr-k" style="width:30px;flex-shrink:0;">02</span><span class="dr-v" style="text-align:left;color:var(--dim);">Caterpillar Surface Mining &amp; Tech.</span></div>
+        <div class="detail-row"><span class="dr-k" style="width:30px;flex-shrink:0;">03</span><span class="dr-v" style="text-align:left;color:var(--dim);">Hexagon Mining</span></div>
+        <div class="detail-row"><span class="dr-k" style="width:30px;flex-shrink:0;">04</span><span class="dr-v" style="text-align:left;color:var(--dim);">Becton Dickinson</span></div>
+        <div class="detail-row"><span class="dr-k" style="width:30px;flex-shrink:0;">05</span><span class="dr-v" style="text-align:left;color:var(--dim);">American Battery Factory</span></div>
+      </div>
+    </div>
+
+    <!-- UA Rankings -->
+    <div class="info-card span2">
+      <div class="ic-title">University of Arizona — 56,544 Total Enrollment (2025)</div>
+      <div class="feature-cols">
+        <div class="feature-item"><div class="fi-dot" style="background:var(--blue);"></div>#2 Management Information Systems</div>
+        <div class="feature-item"><div class="fi-dot" style="background:var(--blue);"></div>#8 Space Science</div>
+        <div class="feature-item"><div class="fi-dot" style="background:var(--blue);"></div>#27 Best Business Schools</div>
+        <div class="feature-item"><div class="fi-dot" style="background:var(--blue);"></div>#47 Medicine</div>
+        <div class="feature-item"><div class="fi-dot" style="background:var(--blue);"></div>#52 Top Public School</div>
+        <div class="feature-item"><div class="fi-dot" style="background:var(--blue);"></div>#54 Education</div>
+        <div class="feature-item"><div class="fi-dot" style="background:var(--blue);"></div>#69 Undergrad Engineering Programs</div>
+        <div class="feature-item"><div class="fi-dot" style="background:var(--blue);"></div>#70 Best Colleges for Veterans</div>
+      </div>
+      <div style="margin-top:12px;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;">Sources: BLS, BEA, Federal Reserve, Moody's Analytics, arizona.edu, suncorridorinc.com, US News &amp; Report, Sites USA · Cushman &amp; Wakefield | PICOR 11/13/2025</div>
+    </div>
+
+    <!-- Contact — full width -->
+    <div class="info-card span3" style="background:linear-gradient(90deg,rgba(200,164,90,0.06) 0%,var(--card) 100%);border-color:rgba(200,164,90,0.25);">
+      <div class="ic-title">Contact</div>
+      <div class="contact-strip">
+        <div class="agent-block">
+          <div class="agent-avatar">KN</div>
+          <div class="agent-bio">
+            <div class="agent-name">Kameron Norwood</div>
+            <div class="agent-title">Investment Sales &amp; Leasing<br>PICOR | Cushman &amp; Wakefield</div>
+          </div>
+        </div>
+        <div class="contact-links">
+          <a class="contact-link" href="tel:+15203608510">
+            <span class="cl-label">Phone</span>
+            <span class="cl-val">+1 520 360 8510</span>
+          </a>
+          <a class="contact-link" href="mailto:knorwood@picor.com">
+            <span class="cl-label">Email</span>
+            <span class="cl-val">knorwood@picor.com</span>
+          </a>
+          <a class="contact-link" href="https://picor.com" target="_blank">
+            <span class="cl-label">Web</span>
+            <span class="cl-val">picor.com</span>
+          </a>
+        </div>
+        <a class="cta-btn" href="mailto:knorwood@picor.com?subject=4915 E Speedway Blvd Inquiry">Book a Call / Zoom</a>
+      </div>
+    </div>
+
+  </div><!-- /info-grid -->
+
+</main><!-- /main -->
+
+<!-- ══ TRADE MAP ══ -->
+<section class="hbu-full-width" style="padding-top:40px;padding-bottom:0;">
+  <div class="hbu-full-inner">
+    <div class="section-label">Trade Area Map — Speedway Blvd Corridor</div>
+    <!-- Embed the trade map from the PDF as an image pulled from the original PDF page 3 aerial -->
+    <div style="position:relative;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:32px;">
+      <!-- Trade area context description since map image is from PDF -->
+      <div style="padding:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;">
+
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;">Major Corridors</div>
+          <div class="detail-table">
+            <div class="detail-row"><span class="dr-k">N</span><span class="dr-v" style="text-align:left;color:var(--dim);">Broadway Blvd</span></div>
+            <div class="detail-row"><span class="dr-k">S</span><span class="dr-v" style="text-align:left;color:var(--dim);">22nd St / Golf Links Rd</span></div>
+            <div class="detail-row"><span class="dr-k">E</span><span class="dr-v" style="text-align:left;color:var(--dim);">Wilmot Rd / Craycroft Rd</span></div>
+            <div class="detail-row"><span class="dr-k">W</span><span class="dr-v" style="text-align:left;color:var(--dim);">Alvernon Way / Swan Rd</span></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;">Nearby Anchors — North</div>
+          <div class="tenant-row">
+            <span class="tenant-pill">Whole Foods</span>
+            <span class="tenant-pill">Sprouts</span>
+            <span class="tenant-pill">Kia / Lexus</span>
+            <span class="tenant-pill">Trader Joe's</span>
+            <span class="tenant-pill">Big 5</span>
+            <span class="tenant-pill">AutoZone</span>
+            <span class="tenant-pill">QuikTrip</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;">Nearby Anchors — South</div>
+          <div class="tenant-row">
+            <span class="tenant-pill">Park Place Mall</span>
+            <span class="tenant-pill">Dillard's</span>
+            <span class="tenant-pill">Barnes &amp; Noble</span>
+            <span class="tenant-pill">Planet Fitness</span>
+            <span class="tenant-pill">Petco</span>
+            <span class="tenant-pill">Hobby Lobby</span>
+            <span class="tenant-pill">Cinemark</span>
+            <span class="tenant-pill">Dutch Bros</span>
+            <span class="tenant-pill">DM Air Force Base</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="border-top:1px solid var(--border);padding:16px 32px;background:rgba(200,164,90,0.04);display:flex;align-items:center;gap:16px;">
+        <div style="width:10px;height:10px;background:var(--accent);border-radius:50%;flex-shrink:0;box-shadow:0 0 8px rgba(200,164,90,0.6);"></div>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;">SUBJECT — 4915 E Speedway Blvd &nbsp;·&nbsp; Speedway Blvd &amp; Arcadia Ave &nbsp;·&nbsp; Pinecrest Shopping Center Corridor &nbsp;·&nbsp; 40,222 VPD (2024)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HBU — AI RENDERING CONCEPTS ══ -->
+<section class="hbu-full-width" style="padding-top:40px;">
+  <div class="hbu-full-inner">
+    <div class="section-label">AI Highest &amp; Best Use — Rendering Concepts</div>
+    <div class="hbu-grid">
+
+      <!-- Option 1: QSR Drive-Thru -->
+      <div class="hbu-card top-pick">
+        <div class="hbu-info">
+          <div class="hbu-number">HBU · 01 OF 03</div>
+          <div class="hbu-title">QSR Drive-Thru<br>+ Retail Strip</div>
+          <div class="hbu-desc">Dutch Bros / Starbucks drive-thru anchor pad fronting Speedway with a 4–5 unit inline retail strip behind. Maximizes the 40K VPD exposure and aligns with surrounding commercial tenants.</div>
+          <div class="hbu-metrics">
+            <div class="metric-row"><span class="mk">Zoning Fit</span><span class="mv green">C-2 ✓ Ideal</span></div>
+            <div class="metric-row"><span class="mk">Traffic Capture</span><span class="mv green">High</span></div>
+            <div class="metric-row"><span class="mk">Build Size</span><span class="mv">~8,000–12,000 SF</span></div>
+            <div class="metric-row"><span class="mk">ROI Potential</span><span class="mv gold">★★★★★</span></div>
+          </div>
+        </div>
+        <div class="hbu-render" style="background:linear-gradient(135deg,#141008 0%,#1e1a0e 100%);display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;padding:40px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(200,164,90,0.15);letter-spacing:2px;">QSR RENDERING</div>
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:8px;">AI CONCEPT · SLOT AVAILABLE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Option 2: Medical Office -->
+      <div class="hbu-card">
+        <div class="hbu-info">
+          <div class="hbu-number">HBU · 02 OF 03</div>
+          <div class="hbu-title">Medical Office<br>/ Urgent Care</div>
+          <div class="hbu-desc">Single-story 12,000–18,000 SF medical office or urgent care building. Serves the Davis-Monthan AFB and University of Arizona medical workforce with strong lease demand in this corridor.</div>
+          <div class="hbu-metrics">
+            <div class="metric-row"><span class="mk">Zoning Fit</span><span class="mv green">C-2 ✓ Permitted</span></div>
+            <div class="metric-row"><span class="mk">Demand Driver</span><span class="mv">DMAFB + UA Health</span></div>
+            <div class="metric-row"><span class="mk">Build Size</span><span class="mv">~12,000–18,000 SF</span></div>
+            <div class="metric-row"><span class="mk">ROI Potential</span><span class="mv gold">★★★★☆</span></div>
+          </div>
+        </div>
+        <div class="hbu-render" style="background:linear-gradient(135deg,#0e1014 0%,#131820 100%);display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;padding:40px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(91,155,213,0.15);letter-spacing:2px;">MEDICAL RENDERING</div>
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:8px;">AI CONCEPT · SLOT AVAILABLE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Option 3: Mixed-Use -->
+      <div class="hbu-card">
+        <div class="hbu-info">
+          <div class="hbu-number">HBU · 03 OF 03</div>
+          <div class="hbu-title">Mixed-Use<br>Infill Residential</div>
+          <div class="hbu-desc">3–4 story high-density residential over ground-floor retail. Tucson's infill market is hot along arterials. Walkable to UA, transit-served, eligible for density bonuses under current city policy.</div>
+          <div class="hbu-metrics">
+            <div class="metric-row"><span class="mk">Zoning Fit</span><span class="mv" style="color:#f59e0b;">C-2 + Rezoning</span></div>
+            <div class="metric-row"><span class="mk">Units Potential</span><span class="mv">~60–90 Units</span></div>
+            <div class="metric-row"><span class="mk">Build Size</span><span class="mv">~40,000–60,000 SF</span></div>
+            <div class="metric-row"><span class="mk">ROI Potential</span><span class="mv gold">★★★★☆</span></div>
+          </div>
+        </div>
+        <div class="hbu-render" style="background:linear-gradient(135deg,#10080e 0%,#180e1c 100%);display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;padding:40px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(167,139,250,0.15);letter-spacing:2px;">MIXED-USE RENDERING</div>
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:8px;">AI CONCEPT · SLOT AVAILABLE</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /hbu-grid -->
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <span>PICOR Commercial Real Estate Services · Cushman &amp; Wakefield Alliance · 5151 E Broadway Suite 115, Tucson AZ 85711</span>
+  <span style="white-space:nowrap;">© 2025 Cushman &amp; Wakefield · All information subject to change</span>
+</footer>
+
+<!-- ══ LIGHTBOXES ══ -->
+
+<!-- Original Photos Lightbox -->
+<div class="lightbox" id="lightbox-original" onclick="closeLightboxOutside(event,'original')">
+  <button class="lightbox-close" onclick="closeLightbox('original')">✕</button>
+  <button class="lightbox-prev" onclick="lightboxNav(-1,'original')">‹</button>
+  <div class="lightbox-inner">
+    <img id="lightbox-img-original" src="" alt="">
+  </div>
+  <button class="lightbox-next" onclick="lightboxNav(1,'original')">›</button>
+  <div class="lightbox-caption" id="lightbox-caption-original"></div>
+  <div class="lightbox-counter" id="lightbox-counter-original"></div>
+</div>
+
+<!-- Red Line Lightbox -->
+<div class="lightbox" id="lightbox-redline" onclick="closeLightboxOutside(event,'redline')">
+  <button class="lightbox-close" onclick="closeLightbox('redline')">✕</button>
+  <button class="lightbox-prev" onclick="lightboxNav(-1,'redline')">‹</button>
+  <div class="lightbox-inner">
+    <img id="lightbox-img-redline" src="" alt="">
+  </div>
+  <button class="lightbox-next" onclick="lightboxNav(1,'redline')">›</button>
+  <div class="lightbox-caption" id="lightbox-caption-redline"></div>
+  <div class="lightbox-counter" id="lightbox-counter-redline"></div>
+</div>
+
+<!-- Aerial Lightbox -->
+<div class="lightbox" id="lightbox-aerial" onclick="closeLightboxOutside(event,'aerial')">
+  <button class="lightbox-close" onclick="closeLightbox('aerial')">✕</button>
+  <button class="lightbox-prev" onclick="lightboxNav(-1,'aerial')">‹</button>
+  <div class="lightbox-inner">
+    <img id="lightbox-img-aerial" src="" alt="">
+  </div>
+  <button class="lightbox-next" onclick="lightboxNav(1,'aerial')">›</button>
+  <div class="lightbox-caption" id="lightbox-caption-aerial"></div>
+  <div class="lightbox-counter" id="lightbox-counter-aerial"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  IMAGE SETS
+// ═══════════════════════════════════════════
+
+const BASE = 'https://npmfudvtmltkincqyxny.supabase.co/storage/v1/object/public/property-media/4915-e-speedway';
+
+const SETS = {
+  original: {
+    label: 'ORIGINAL PHOTOGRAPHY',
+    imgs: [
+      { src: BASE + '/original/1.png', caption: 'ORIGINAL · 01' },
+      { src: BASE + '/original/2.png', caption: 'ORIGINAL · 02' },
+      { src: BASE + '/original/3.png', caption: 'ORIGINAL · 03' },
+      { src: BASE + '/original/4.png', caption: 'ORIGINAL · 04' },
+      { src: BASE + '/original/5.png', caption: 'ORIGINAL · 05' },
+    ]
+  },
+  redline: {
+    label: 'RED LINE ADVERTISING',
+    imgs: [
+      { src: BASE + '/red-line-advertising/1.png', caption: 'RED LINE · 01' },
+      { src: BASE + '/red-line-advertising/2.png', caption: 'RED LINE · 02' },
+      { src: BASE + '/red-line-advertising/3.png', caption: 'RED LINE · 03' },
+      { src: BASE + '/red-line-advertising/4.png', caption: 'RED LINE · 04' },
+      { src: BASE + '/red-line-advertising/5.png', caption: 'RED LINE · 05' },
+      { src: BASE + '/red-line-advertising/6.png', caption: 'RED LINE · 06' },
+      { src: BASE + '/red-line-advertising/7.png', caption: 'RED LINE · 07' },
+      { src: BASE + '/red-line-advertising/8.png', caption: 'RED LINE · 08' },
+      { src: BASE + '/red-line-advertising/9.png', caption: 'RED LINE · 09' },
+    ]
+  },
+  aerial: {
+    label: 'AERIAL ANGLE',
+    imgs: [
+      { src: BASE + '/aerial-angle/1.png',  caption: 'AERIAL · 01' },
+      { src: BASE + '/aerial-angle/2.png',  caption: 'AERIAL · 02' },
+      { src: BASE + '/aerial-angle/3.png',  caption: 'AERIAL · 03' },
+      { src: BASE + '/aerial-angle/4.png',  caption: 'AERIAL · 04' },
+      { src: BASE + '/aerial-angle/5.png',  caption: 'AERIAL · 05' },
+      { src: BASE + '/aerial-angle/6.png',  caption: 'AERIAL · 06' },
+      { src: BASE + '/aerial-angle/7.png',  caption: 'AERIAL · 07' },
+      { src: BASE + '/aerial-angle/8.png',  caption: 'AERIAL · 08' },
+      { src: BASE + '/aerial-angle/9.png',  caption: 'AERIAL · 09' },
+      { src: BASE + '/aerial-angle/10.png', caption: 'AERIAL · 10' },
+      { src: BASE + '/aerial-angle/11.png', caption: 'AERIAL · 11' },
+      { src: BASE + '/aerial-angle/12.png', caption: 'AERIAL · 12' },
+      { src: BASE + '/aerial-angle/13.png', caption: 'AERIAL · 13' },
+      { src: BASE + '/aerial-angle/14.png', caption: 'AERIAL · 14' },
+    ]
+  }
+};
+
+const lbState = { original: 0, redline: 0, aerial: 0 };
+
+function openLightbox(i, set) {
+  const imgs = SETS[set].imgs;
+  lbState[set] = i;
+  document.getElementById('lightbox-img-' + set).src = imgs[i].src;
+  document.getElementById('lightbox-caption-' + set).textContent = imgs[i].caption;
+  document.getElementById('lightbox-counter-' + set).textContent = (i + 1) + ' / ' + imgs.length;
+  document.getElementById('lightbox-' + set).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(set) {
+  document.getElementById('lightbox-' + set).classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function closeLightboxOutside(e, set) {
+  if (e.target === document.getElementById('lightbox-' + set)) closeLightbox(set);
+}
+
+function lightboxNav(dir, set) {
+  const imgs = SETS[set].imgs;
+  const next = (lbState[set] + dir + imgs.length) % imgs.length;
+  openLightbox(next, set);
+}
+
+document.addEventListener('keydown', e => {
+  ['original','redline','aerial'].forEach(set => {
+    const lb = document.getElementById('lightbox-' + set);
+    if (lb && lb.classList.contains('active')) {
+      if (e.key === 'Escape') closeLightbox(set);
+      if (e.key === 'ArrowRight') lightboxNav(1, set);
+      if (e.key === 'ArrowLeft')  lightboxNav(-1, set);
+    }
+  });
+});
+
+// Animate loading bar on init
+window.addEventListener('DOMContentLoaded', () => {
+  const bar = document.getElementById('loadingBar');
+  if (bar) {
+    bar.style.width = '100%';
+    setTimeout(() => { bar.style.opacity = '0'; }, 800);
+  }
+});
+</script>
+</body>
+</html>
